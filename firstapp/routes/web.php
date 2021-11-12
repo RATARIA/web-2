@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiscoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +25,8 @@ Route::get('/home', function () {
 Route::get('/bob', function () {
     return view('bob');
 })->middleware(['guest'])->name('bob');
-
+ 
 require __DIR__.'/auth.php';
+
+ Route::resource('discos', DiscoController::class)->except(['destroy'])->middleware(['auth']);
+ Route::get('discos/delete/{disco}',[DiscoController::class, 'destroy'])->name('discos.delete')->middleware(['auth']);
